@@ -195,15 +195,17 @@ G2 R13 X27 Y-13
 
 G40
 
+G0 Z10
+
 
 
 
 
 ; Der Chassis Auschnitt
 ; ---------------------
-G0 Z-6
 ; Innenkontur --> IM Uhrzeigersinn fräsen
 G0 X0 Y0
+G0 Z-6
 
 ; define a variable
 #1 = 1
