@@ -1,3 +1,8 @@
+; Touch off for this workpiece:
+; the chassis should be located 75mm from the top and in the center of the plate (60mm from each side)
+; The center of the chassis is X0 Y0 in this gcode file.
+; The top of the mdf plate is 0, so the bottom is -12mm
+
 G21      ; use mm
 G90      ; absolute coordinates
 G92.1    ; cancel offset coordinate system and set values to zero
@@ -11,6 +16,7 @@ G49      ; turn cutter legth compensation off
 G0 Z10   ; Go to saftyplane, usually you define the highest part of your workpiece as Z=0
 ; Spindle Warmup Sequence
 M3       ; turn on spindle
+; TODO set the right spindle speed here
 S6000    ; 6000 min-1 spindle speed
 ;G4 P120  ; wait 2 minutes until spindle is warm
 ;S12000   ; add another 6000min-1
