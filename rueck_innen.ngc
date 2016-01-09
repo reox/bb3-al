@@ -1,0 +1,108 @@
+; Touch off for this workpiece:
+; the upper part is 98mm in X direction
+; and the side is 48mm in Y direction
+
+G21      ; use mm
+G90      ; absolute coordinates
+G92.1    ; cancel offset coordinate system and set values to zero
+G54      ; use G54 coordinate system
+G40      ; turn radius compensation off
+G17      ; choose x,y plane
+G80      ; Cancel Motion Modes (e.g. active canned cycles)
+G94      ; movement speed is in units per minute (hence mm/min)
+G49      ; turn cutter legth compensation off
+; It is always a good idea to go to a known safe location to run the warmup
+G0 Z10   ; Go to saftyplane, usually you define the highest part of your workpiece as Z=0
+; Spindle Warmup Sequence
+M3       ; turn on spindle
+S18000    ; 6000 min-1 spindle speed
+
+G4 P10
+
+#<_plungerate> = 300
+#<_feedrate> = 2000
+
+F#<_feedrate>
+
+(your program starts here... now you can do things like)
+G0 X0 Y0 ; go to your 0,0 point rapidly
+G4 P0    ; Dwell for no time, to force linuxcnc to be on this point exactly
+
+; im uhrzeigersinn fahren
+G42.1 D6
+G0 Y-38 X0
+
+F#<_plungerate>
+G1 Z0
+
+F#<_feedrate>
+
+o100 repeat [4]
+    G91
+    F#<_plungerate>
+    G1 Z-3.25
+    G90
+    F#<_feedrate>
+    G1 X-68
+    G2 X-78 Y-28 I10
+    G1 Y28
+    G2 X-68 Y38 I10
+    G1 X68
+    G2 X78 Y28 I-10
+    G1 Y-28
+    G2 X68 Y-38 I-10
+    G1 X0
+o100 endrepeat
+
+G0 Z10
+G40
+G0 X0 Y0
+
+; Löcher bohren
+
+G0 X88 Y38
+G0 Z3
+F#<_plungerate>
+G1 Z-13
+G0 Z-3
+G91
+G1 X1.5
+G2 X0 Y0 I-1.5
+G90
+
+G0 X88 Y-38
+G0 Z3
+F#<_plungerate>
+G1 Z-13
+G0 Z-3
+G91
+G1 X1.5
+G2 X0 Y0 I-1.5
+G90
+
+G0 X-88 Y-38
+G0 Z3
+F#<_plungerate>
+G1 Z-13
+G0 Z-3
+G91
+G1 X1.5
+G2 X0 Y0 I-1.5
+G90
+
+G0 X-88 Y38
+G0 Z3
+F#<_plungerate>
+G1 Z-13
+G0 Z-3
+G91
+G1 X1.5
+G2 X0 Y0 I-1.5
+G90
+
+
+
+; the tail
+G0 Z10   ; retract from workplane - safty plane
+M30      ; end program
+
