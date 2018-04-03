@@ -211,7 +211,7 @@ G0 Z-6
 #1 = 1
 
 
-o100 while [#1 LT 5]
+o100 while [#1 LE 4]
     ; Cutter Compensation right of the path with 6mm Diameter
     G0 X0 Y0
     o101 if [#1 EQ 4]
@@ -219,7 +219,7 @@ o100 while [#1 LT 5]
     o101 else
         #2 = [4-#1]
         #2 = [#2*6]
-        #2 = [#2-1]
+        #2 = [#2+1]
         G42.1 D#2
     o101 endif
 
